@@ -71,7 +71,25 @@ const App = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   // Define state variable for the data to be rendered on the page
-  const [renderedData, setRenderedData] = useState([]);
+  const [renderedData, setRenderedData] = useState(data.slice(0, pageSize));
+
+  /**
+   * function that returns the data for the page to be fetched
+   * @param data - all the data
+   * @param pageNumber - page number to fetch
+   * @param pageSize - number of items to fetch for the page
+   */
+  const pagination = (data, pageNumber, pageSize) => {
+    let startIndex = (pageNumber - 1) * pageSize;
+    //don't return the information that does not exist inside the data array
+    if (startIndex >= data.length) {
+      return [];
+    }
+    //set the page number, to the page number that we wanted to fetch so that we have information
+    //about which page was the one that was last fetched
+    setPageNumber(pageNumber);
+    return data.slice(startIndex, startIndex + pageSize);
+  };
 
   return (
     // Use the SafeAreaView component to ensure content is displayed within the safe area boundaries of the device
@@ -97,12 +115,28 @@ const App = () => {
         <View style={style.userStoryContainer}>
           {/* Use FlatList to display user stories */}
           <FlatList
+            //when the user scrolls through half of the data call onEndReached function
+            onEndReachedThreshold={0.5}
+            keyExtractor={item => item.id.toString()}
+            onEndReached={() => {
+              //if we are not already in the middle of fetching data then fetch the data
+              if (!isLoading) {
+                //set is loading to true because we just started fetching data
+                setIsLoading(true);
+                setRenderedData(prev => [
+                  ...prev,
+                  ...pagination(data, pageNumber + 1, pageSize),
+                ]);
+                //after updating rendered data we have to set is loading to false, because we loaded the data we needed
+                setIsLoading(false);
+              }
+            }}
             // Hide horizontal scroll indicator
             showsHorizontalScrollIndicator={false}
             // Set FlatList to display horizontally
             horizontal={true}
             // Pass in data to be rendered in FlatList
-            data={data}
+            data={renderedData}
             // Define how each item should be rendered
             renderItem={({item}) => <UserStory firstName={item.firstName} />}
           />
