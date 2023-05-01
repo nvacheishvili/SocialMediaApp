@@ -59,35 +59,97 @@ const App = () => {
       id: 9,
     },
   ];
+  const posts = [
+    {
+      firstName: 'Allison',
+      lastName: 'Becker',
+      location: 'Sukabumi, Jawa Barat',
+      likes: 1201,
+      comments: 24,
+      bookmarks: 55,
+      id: 1,
+    },
+    {
+      firstName: 'Jennifer',
+      lastName: 'Wilkson',
+      location: 'Pondok Leungsir, Jawa Barat',
+      likes: 570,
+      comments: 12,
+      bookmarks: 60,
+      id: 2,
+    },
+    {
+      firstName: 'Adam',
+      lastName: 'Spera',
+      location: 'Boston, Massachusetts',
+      likes: 100,
+      comments: 8,
+      bookmarks: 7,
+      id: 3,
+    },
+    {
+      firstName: 'Nata',
+      lastName: 'Vacheishvili',
+      location: 'New York, New York',
+      likes: 300,
+      comments: 18,
+      bookmarks: 17,
+      id: 4,
+    },
+    {
+      firstName: 'Nicolas',
+      lastName: 'Namoradze',
+      location: 'Berlin, Germany',
+      likes: 1240,
+      comments: 56,
+      bookmarks: 20,
+      id: 5,
+    },
+  ];
   // Define page size constant for the number of items to be displayed per page
   const pageSize = 4;
+  const pageSizePosts = 2;
 
   // Define state variable for the current page number
   // so that we know how many pages we have fetched already
   const [pageNumber, setPageNumber] = useState(1);
+  const [postPageNumber, setPostPageNumber] = useState(1);
 
   // Define state variable for the loading status of the flatlist,
   // will be used when we'll be fetching data on scroll until we complete the fetch
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingPosts, setIsLoadingPosts] = useState(false);
 
-  // Define state variable for the data to be rendered on the page
+  // Define state variable for the data to be rendered in the user story container
   const [renderedData, setRenderedData] = useState(data.slice(0, pageSize));
+
+  // Define state variable for the data to be rendered in the user posts container
+  //@TODO This should be pageSizePosts, I forgot to mention it in this particular lesson
+  //we'll fix that in the upcoming lessons
+  const [renderedDataPosts, setRenderedDataPosts] = useState(
+    posts.slice(0, pageSize),
+  );
 
   /**
    * function that returns the data for the page to be fetched
    * @param data - all the data
    * @param pageNumber - page number to fetch
    * @param pageSize - number of items to fetch for the page
+   * @param posts - boolean to determine if we're using pagination for posts or user stories
    */
-  const pagination = (data, pageNumber, pageSize) => {
+  const pagination = (data, pageNumber, pageSize, posts = false) => {
     let startIndex = (pageNumber - 1) * pageSize;
     //don't return the information that does not exist inside the data array
     if (startIndex >= data.length) {
       return [];
     }
-    //set the page number, to the page number that we wanted to fetch so that we have information
-    //about which page was the one that was last fetched
-    setPageNumber(pageNumber);
+    if (!posts) {
+      //set the page number, to the page number that we wanted to fetch so that we have information
+      //about which page was the one that was last fetched
+      setPageNumber(pageNumber);
+    } else {
+      setPostPageNumber(pageNumber);
+    }
     return data.slice(startIndex, startIndex + pageSize);
   };
 
@@ -141,6 +203,7 @@ const App = () => {
             renderItem={({item}) => <UserStory firstName={item.firstName} />}
           />
         </View>
+        <View style={style.userPostContainer} />
       </ScrollView>
     </SafeAreaView>
   );

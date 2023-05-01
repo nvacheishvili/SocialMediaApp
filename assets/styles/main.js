@@ -44,6 +44,12 @@ const style = StyleSheet.create({
   userStoryContainer: {
     paddingHorizontal: 28,
     marginTop: 12,
+    height: 100,
+  },
+  userPostContainer: {
+    marginTop: 30,
+    height: '100%',
+    paddingHorizontal: 24,
   },
 });
 
