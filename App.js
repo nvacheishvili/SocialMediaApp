@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   Pressable,
   SafeAreaView,
@@ -10,6 +10,7 @@ import {
 
 //Custom Components
 import Title from './components/Title/Title';
+import UserStory from './components/UserStory/UserStory';
 
 //FontAwesome Icons
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
@@ -58,6 +59,19 @@ const App = () => {
       id: 9,
     },
   ];
+  // Define page size constant for the number of items to be displayed per page
+  const pageSize = 4;
+
+  // Define state variable for the current page number
+  // so that we know how many pages we have fetched already
+  const [pageNumber, setPageNumber] = useState(1);
+
+  // Define state variable for the loading status of the flatlist,
+  // will be used when we'll be fetching data on scroll until we complete the fetch
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Define state variable for the data to be rendered on the page
+  const [renderedData, setRenderedData] = useState([]);
 
   return (
     // Use the SafeAreaView component to ensure content is displayed within the safe area boundaries of the device
@@ -79,7 +93,20 @@ const App = () => {
             </View>
           </Pressable>
         </View>
-        <View>{/*<FlatList data={} renderItem={} />*/}</View>
+        {/* Use View to create a container for the user stories */}
+        <View style={style.userStoryContainer}>
+          {/* Use FlatList to display user stories */}
+          <FlatList
+            // Hide horizontal scroll indicator
+            showsHorizontalScrollIndicator={false}
+            // Set FlatList to display horizontally
+            horizontal={true}
+            // Pass in data to be rendered in FlatList
+            data={data}
+            // Define how each item should be rendered
+            renderItem={({item}) => <UserStory firstName={item.firstName} />}
+          />
+        </View>
       </ScrollView>
     </SafeAreaView>
   );

@@ -43,6 +43,7 @@ const style = StyleSheet.create({
   },
   userStoryContainer: {
     paddingHorizontal: 28,
+    marginTop: 12,
   },
 });
 
