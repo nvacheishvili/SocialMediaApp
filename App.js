@@ -1,5 +1,5 @@
 import React from 'react';
-import {SafeAreaView, ScrollView, View} from 'react-native';
+import {Pressable, SafeAreaView, ScrollView, View, Text} from 'react-native';
 
 //Custom Components
 import Title from './components/Title/Title';
@@ -8,6 +8,9 @@ import Title from './components/Title/Title';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faEnvelope} from '@fortawesome/free-regular-svg-icons';
 
+//Style Imports
+import style from './assets/styles/main';
+
 const App = () => {
   return (
     // Use the SafeAreaView component to ensure content is displayed within the safe area boundaries of the device
@@ -15,20 +18,19 @@ const App = () => {
       {/* Use ScrollView to allow users to scroll through content */}
       <ScrollView>
         {/* Use View to create a container for title and icon */}
-        <View
-          style={{
-            paddingTop: 30,
-            paddingRight: 26,
-            paddingLeft: 17,
-            flex: 1,
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-          }}>
+        <View style={style.header}>
           {/* Use custom Title component to display the title */}
           <Title title={"Let's Explore"} />
-          {/* Use FontAwesomeIcon component to display an icon from FontAwesome icon set */}
-          <FontAwesomeIcon icon={faEnvelope} />
+          {/* Use Pressable to create a clickable component */}
+          <Pressable style={style.messageIcon}>
+            {/* Use FontAwesomeIcon component to display an icon from FontAwesome icon set */}
+            <FontAwesomeIcon icon={faEnvelope} color={'#CACDDE'} size={20} />
+            {/* Use View to create a container for message number */}
+            <View style={style.messageNumberContainer}>
+              {/* Use Text to display the number of messages */}
+              <Text style={style.messageNumber}>2</Text>
+            </View>
+          </Pressable>
         </View>
       </ScrollView>
     </SafeAreaView>
