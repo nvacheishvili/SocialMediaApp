@@ -211,14 +211,14 @@ const App = () => {
             //when the user scrolls through half of the data call onEndReached function
             onMomentumScrollBegin={() => setIsLoadingPosts(false)}
             onEndReachedThreshold={0.5}
-            keyExtractor={item => item.id.toString() + 'post'}
+            keyExtractor={item => item.id.toString()}
             onEndReached={() => {
               //if we are not already in the middle of fetching data then fetch the data
               //@TODO isLoading should be changed to isLoadingPosts
               if (!isLoading) {
                 //set is loading to true because we just started fetching data
                 setIsLoadingPosts(true);
-                setRenderedDataPosts(prev => [
+                setRenderedData(prev => [
                   ...prev,
                   //@TODO we need to change pageNumber to postPageNumber, pageSize to pageSizePosts
                   ...pagination(posts, pageNumber + 1, pageSize, true),
