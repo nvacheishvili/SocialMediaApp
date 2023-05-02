@@ -12,6 +12,7 @@ import {faEnvelope} from '@fortawesome/free-regular-svg-icons';
 
 //Style Imports
 import style from './assets/styles/main';
+import {scaleFontSize} from './assets/styles/scaling';
 
 const App = () => {
   //All of the items in our stories
@@ -162,7 +163,7 @@ const App = () => {
                 <FontAwesomeIcon
                   icon={faEnvelope}
                   color={'#CACDDE'}
-                  size={20}
+                  size={scaleFontSize(20)}
                 />
                 {/* Use View to create a container for message number */}
                 <View style={style.messageNumberContainer}>
