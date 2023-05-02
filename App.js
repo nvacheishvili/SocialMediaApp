@@ -11,6 +11,7 @@ import {
 //Custom Components
 import Title from './components/Title/Title';
 import UserStory from './components/UserStory/UserStory';
+import UserPost from './components/UserPost/UserPost';
 
 //FontAwesome Icons
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
@@ -177,6 +178,7 @@ const App = () => {
         <View style={style.userStoryContainer}>
           {/* Use FlatList to display user stories */}
           <FlatList
+            onMomentumScrollBegin={() => setIsLoadingPosts(false)}
             //when the user scrolls through half of the data call onEndReached function
             onEndReachedThreshold={0.5}
             keyExtractor={item => item.id.toString()}
@@ -203,7 +205,45 @@ const App = () => {
             renderItem={({item}) => <UserStory firstName={item.firstName} />}
           />
         </View>
-        <View style={style.userPostContainer} />
+        <View style={style.userPostContainer}>
+          {/* Use FlatList to display user stories */}
+          <FlatList
+            //when the user scrolls through half of the data call onEndReached function
+            onMomentumScrollBegin={() => setIsLoadingPosts(false)}
+            onEndReachedThreshold={0.5}
+            keyExtractor={item => item.id.toString() + 'post'}
+            onEndReached={() => {
+              //if we are not already in the middle of fetching data then fetch the data
+              //@TODO isLoading should be changed to isLoadingPosts
+              if (!isLoading) {
+                //set is loading to true because we just started fetching data
+                setIsLoadingPosts(true);
+                setRenderedDataPosts(prev => [
+                  ...prev,
+                  //@TODO we need to change pageNumber to postPageNumber, pageSize to pageSizePosts
+                  ...pagination(posts, pageNumber + 1, pageSize, true),
+                ]);
+                //after updating rendered data we have to set is loading to false, because we loaded the data we needed
+                setIsLoadingPosts(false);
+              }
+            }}
+            // Hide vertical scroll indicator
+            showsVerticalScrollIndicator={false}
+            // Pass in data to be rendered in FlatList
+            data={renderedDataPosts}
+            // Define how each item should be rendered
+            renderItem={({item}) => (
+              <UserPost
+                firstName={item.firstName}
+                lastName={item.lastName}
+                comments={item.comments}
+                likes={item.likes}
+                bookmarks={item.bookmarks}
+                location={item.location}
+              />
+            )}
+          />
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
