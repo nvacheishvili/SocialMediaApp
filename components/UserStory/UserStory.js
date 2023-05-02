@@ -1,6 +1,9 @@
 import React from 'react';
-import {View, Image, Text} from 'react-native';
+import {View, Text} from 'react-native';
 import PropTypes from 'prop-types';
+
+import UserProfileImage from '../UserProfileImage/UserProfileImage';
+
 import style from './style';
 
 // Define a new React component called UserStory
@@ -8,11 +11,7 @@ const UserStory = props => {
   // Render a container view for the user story
   return (
     <View style={style.storyContainer}>
-      {/* Render a container view for the user image */}
-      <View style={style.userImageContainer}>
-        {/* Render an image component with a default profile image */}
-        <Image source={require('../../assets/images/default_profile.png')} />
-      </View>
+      <UserProfileImage />
       {/* Render the user's first name as text */}
       <Text style={style.name}>{props.firstName}</Text>
     </View>

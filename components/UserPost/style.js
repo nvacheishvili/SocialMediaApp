@@ -22,12 +22,6 @@ const style = StyleSheet.create({
   userPostInformation: {
     marginLeft: 10,
   },
-  image: {
-    borderWidth: 1,
-    borderColor: '#F35BAC',
-    borderRadius: 50,
-    padding: 3,
-  },
   userInformationContainer: {
     flex: 1,
     flexDirection: 'row',
@@ -37,7 +31,6 @@ const style = StyleSheet.create({
   userPostContainer: {
     borderBottomWidth: 1,
     borderColor: '#EFF2F6',
-    marginBottom: 20,
   },
   userPostStatText: {
     color: '#79869F',
