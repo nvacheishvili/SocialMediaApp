@@ -1,5 +1,13 @@
 import React, {useState} from 'react';
-import {Pressable, SafeAreaView, View, Text, FlatList} from 'react-native';
+import {
+  Pressable,
+  SafeAreaView,
+  View,
+  Text,
+  FlatList,
+  Platform, //Information about the platform that the code is running on
+  Switch, //Looks different on iOS and Android so should be a good example
+} from 'react-native';
 
 //Custom Components
 import Title from './components/Title/Title';
@@ -122,6 +130,10 @@ const App = () => {
   const [renderedDataPosts, setRenderedDataPosts] = useState(
     posts.slice(0, pageSizePosts),
   );
+  //Will put the information in your terminal about what information Platform provides for you
+  //Checkout to your terminal to learn more...
+  console.log(Platform);
+  const [isOn, setIsOn] = useState(false);
 
   /**
    * function that returns the data for the page to be fetched
@@ -157,6 +169,24 @@ const App = () => {
             <View style={style.header}>
               {/* Use custom Title component to display the title */}
               <Title title={"Let's Explore"} />
+              <Switch
+                value={isOn}
+                onValueChange={value => setIsOn(value)}
+                style={
+                  //If its open on the android system, we are going to make Switch component appear bigger
+                  //if you delete Platform.OS === 'android' and
+                  // just leave in the object or just change 'android' to 'ios', you will see
+                  //that this code will only make iOS Switch Component larger and android will be left to its default size
+                  Platform.OS === 'android' && {
+                    transform: [{scaleX: 1.8}, {scaleY: 1.8}],
+                  }
+                }
+                //Note that track color cannot be defined for ios, you have to use ios_backgroundColor instead
+                //https://reactnative.dev/docs/switch#ios_backgroundColor
+                trackColor={
+                  Platform.OS === 'iOS' && {false: 'grey', true: 'red'}
+                }
+              />
               {/* Use Pressable to create a clickable component */}
               <Pressable style={style.messageIcon}>
                 {/* Use FontAwesomeIcon component to display an icon from FontAwesome icon set */}
