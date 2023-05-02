@@ -1,5 +1,6 @@
 // Import the createStackNavigator function from the @react-navigation/stack package
 import {createStackNavigator} from '@react-navigation/stack';
+import {createDrawerNavigator} from '@react-navigation/drawer';
 
 // Import the Home and Profile components from their respective files
 import Home from '../screens/Home/Home';
@@ -10,6 +11,20 @@ import {Routes} from './Routes';
 
 // Create a Stack variable using the createStackNavigator function
 const Stack = createStackNavigator();
+const Drawer = createDrawerNavigator();
+
+const MainMenuNavigation = () => {
+  return (
+    <Drawer.Navigator
+      // Hide the header for all screens
+      screenOptions={{header: () => null, headerShown: false}}>
+      {/* Define the Home screen */}
+      <Drawer.Screen name={Routes.Home} component={Home} />
+      {/* Define the Profile screen */}
+      <Drawer.Screen name={Routes.Profile} component={Profile} />
+    </Drawer.Navigator>
+  );
+};
 
 // Define the MainNavigation component
 const MainNavigation = () => {
@@ -20,10 +35,7 @@ const MainNavigation = () => {
       initialRouteName={Routes.Home}
       // Hide the header for all screens
       screenOptions={{header: () => null, headerShown: false}}>
-      {/* Define the Home screen */}
-      <Stack.Screen name={Routes.Home} component={Home} />
-      {/* Define the Profile screen */}
-      <Stack.Screen name={Routes.Profile} component={Profile} />
+      <Stack.Screen name={'Drawer'} component={MainMenuNavigation} />
     </Stack.Navigator>
   );
 };

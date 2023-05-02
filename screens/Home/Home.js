@@ -166,8 +166,7 @@ const Home = ({navigation}) => {
               <Pressable
                 style={style.messageIcon}
                 onPress={() => {
-                  //on click of this icon go to profile page
-                  navigation.navigate(Routes.Profile);
+                  //on click of this icon should go to messages
                 }}>
                 {/* Use FontAwesomeIcon component to display an icon from FontAwesome icon set */}
                 <FontAwesomeIcon
