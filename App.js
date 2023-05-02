@@ -1,5 +1,12 @@
 import React, {useState} from 'react';
-import {Pressable, SafeAreaView, View, Text, FlatList} from 'react-native';
+import {
+  Pressable,
+  SafeAreaView,
+  View,
+  Text,
+  FlatList,
+  StatusBar,
+} from 'react-native';
 
 //Custom Components
 import Title from './components/Title/Title';
@@ -149,6 +156,13 @@ const App = () => {
   return (
     // Use the SafeAreaView component to ensure content is displayed within the safe area boundaries of the device
     <SafeAreaView>
+      {/*background color only works on android*/}
+      {/*iOS background color is transparent and you can only style
+      it with barStyle either light-content or dark-content
+      dark-content will set the bar styling to have black content otherwise, it will have white content
+      https://reactnative.dev/docs/statusbar
+       */}
+      <StatusBar backgroundColor={'red'} barStyle={'dark-content'} />
       {/* Use FlatList to display user stories */}
       <FlatList
         ListHeaderComponent={
